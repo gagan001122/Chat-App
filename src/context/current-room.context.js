@@ -1,5 +1,5 @@
 import React from 'react';
-import { createContext, useContextSelector } from 'react';
+import { createContext, useContextSelector } from 'use-context-selector';
 
 const CurrentRoomContext = createContext();
 
