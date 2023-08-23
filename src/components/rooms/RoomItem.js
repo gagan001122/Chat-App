@@ -1,14 +1,14 @@
-import React from 'react';
-import TimeAgo from 'timeago-react';
-import ProfileAvatar from '../ProfileAvatar';
-
+import React from "react";
+import TimeAgo from "timeago-react";
+import ProfileAvatar from "../ProfileAvatar";
+import "../../styles/style.css";
 const RoomItem = ({ room }) => {
   const { createdAt, name, lastMessage } = room;
 
   return (
-    <div>
-      <div className="d-flex justify-content-between align-items-center">
-        <h3 className="text-disappear">{name}</h3>
+    <div className="hovv add-border">
+      <div className="d-flex justify-content-between align-items-center hovv">
+        <h3 className="text-disappear hovv">{name}</h3>
         <TimeAgo
           datetime={
             lastMessage ? new Date(lastMessage.createdAt) : new Date(createdAt)

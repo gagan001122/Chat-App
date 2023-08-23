@@ -1,17 +1,17 @@
-import React, { memo } from 'react';
-import TimeAgo from 'timeago-react';
-import { Button } from 'rsuite';
-import ProfileAvatar from '../../ProfileAvatar';
-import ProfileInfoBtnModal from './ProfileInfoBtnModal';
-import PresenceDot from '../../PresenceDot';
-import { useCurrentRoom } from '../../../context/current-room.context';
-import { auth } from '../../../misc/firebase';
-import { useHover, useMediaQuery } from '../../../misc/custom-hooks';
-import IconBtnControl from './IconBtnControl';
-import ImgBtnModal from './ImgBtnModal';
+import React, { memo } from "react";
+import TimeAgo from "timeago-react";
+import { Button } from "rsuite";
+import ProfileAvatar from "../../ProfileAvatar";
+import ProfileInfoBtnModal from "./ProfileInfoBtnModal";
+import PresenceDot from "../../PresenceDot";
+import { useCurrentRoom } from "../../../context/current-room.context";
+import { auth } from "../../../misc/firebase";
+import { useHover, useMediaQuery } from "../../../misc/custom-hooks";
+import IconBtnControl from "./IconBtnControl";
+import ImgBtnModal from "./ImgBtnModal";
 
-const renderFileMessage = file => {
-  if (file.contentType.includes('image')) {
+const renderFileMessage = (file) => {
+  if (file.contentType.includes("image")) {
     return (
       <div className="height-220">
         <ImgBtnModal src={file.url} fileName={file.name} />
@@ -19,13 +19,45 @@ const renderFileMessage = file => {
     );
   }
 
-  if (file.contentType.includes('audio')) {
+  if (file.contentType.includes("audio")) {
     return (
       // eslint-disable-next-line jsx-a11y/media-has-caption
       <audio controls>
         <source src={file.url} type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
+    );
+  }
+
+  if (file.contentType.includes("video")) {
+    return (
+      <video controls>
+        <source src={file.url} type={file.contentType} />
+        Your browser does not support the video element.
+      </video>
+    );
+  }
+
+  if (file.contentType.includes("application/pdf")) {
+    return (
+      <div className="pdf-container">
+        <p>{file.name}</p>
+        <Button
+          appearance="primary"
+          onClick={() => window.open(file.url, "_blank")}
+          style={{
+            backgroundColor: "#4caf50",
+            color: "white",
+            border: "none",
+            padding: "8px 8px",
+            borderRadius: "10px",
+            cursor: "pointer",
+            display: "inline-block",
+          }}
+        >
+          Open PDF
+        </Button>
+      </div>
     );
   }
 
@@ -36,10 +68,10 @@ const MessageItem = ({ message, handleAdmin, handleLike, handleDelete }) => {
   const { author, createdAt, text, file, likes, likeCount } = message;
 
   const [selfRef, isHovered] = useHover();
-  const isMobile = useMediaQuery('(max-width: 992px)');
+  const isMobile = useMediaQuery("(max-width: 992px)");
 
-  const isAdmin = useCurrentRoom(v => v.isAdmin);
-  const admins = useCurrentRoom(v => v.admins);
+  const isAdmin = useCurrentRoom((v) => v.isAdmin);
+  const admins = useCurrentRoom((v) => v.admins);
 
   const isMsgAuthorAdmin = admins.includes(author.uid);
   const isAuthor = auth.currentUser.uid === author.uid;
@@ -50,7 +82,7 @@ const MessageItem = ({ message, handleAdmin, handleLike, handleDelete }) => {
 
   return (
     <li
-      className={`padded mb-1 cursor-pointer ${isHovered ? 'bg-black-02' : ''}`}
+      className={`padded mb-1 cursor-pointer ${isHovered ? "bg-black-02" : ""}`}
       ref={selfRef}
     >
       <div className="d-flex align-items-center font-bolder mb-1">
@@ -71,8 +103,8 @@ const MessageItem = ({ message, handleAdmin, handleLike, handleDelete }) => {
           {canGrantAdmin && (
             <Button block onClick={() => handleAdmin(author.uid)} color="blue">
               {isMsgAuthorAdmin
-                ? 'Remove admin permission'
-                : 'Give admin in this room'}
+                ? "Remove admin permission"
+                : "Give admin in this room"}
             </Button>
           )}
         </ProfileInfoBtnModal>
@@ -82,7 +114,7 @@ const MessageItem = ({ message, handleAdmin, handleLike, handleDelete }) => {
         />
 
         <IconBtnControl
-          {...(isLiked ? { color: 'red' } : {})}
+          {...(isLiked ? { color: "red" } : {})}
           isVisible={canShowIcons}
           iconName="heart"
           tooltip="Like this message"
@@ -99,7 +131,7 @@ const MessageItem = ({ message, handleAdmin, handleLike, handleDelete }) => {
         )}
       </div>
 
-      <div>
+      <div className="flex-dir">
         {text && <span className="word-breal-all">{text}</span>}
         {file && renderFileMessage(file)}
       </div>

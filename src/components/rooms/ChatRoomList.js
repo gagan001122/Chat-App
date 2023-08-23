@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Nav, Loader } from 'rsuite';
-import RoomItem from './RoomItem';
-import { useRooms } from '../../context/rooms.context';
-
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Nav, Loader } from "rsuite";
+import RoomItem from "./RoomItem";
+import { useRooms } from "../../context/rooms.context";
+import "../../styles/style.css";
 const ChatRoomList = ({ aboveElHeight }) => {
   const rooms = useRooms();
   const location = useLocation();
@@ -24,8 +24,9 @@ const ChatRoomList = ({ aboveElHeight }) => {
       )}
       {rooms &&
         rooms.length > 0 &&
-        rooms.map(room => (
+        rooms.map((room) => (
           <Nav.Item
+            className="room-list"
             componentClass={Link}
             to={`/chat/${room.id}`}
             key={room.id}

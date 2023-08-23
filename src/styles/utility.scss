@@ -25,6 +25,32 @@ $indent_3: 15px;
   white-space: nowrap !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
+  font-size: 25px;
+}
+
+.hovv:hover {
+  background-color: rgb(162, 207, 231);
+}
+
+.add-border {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.flex-dir {
+  display: flex;
+}
+
+.msg-win-top {
+  background-color: #2196f3;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.mar-top {
+  padding-top: 20px;
 }
 
 .overflow-y-scroll {
@@ -205,6 +231,7 @@ $indent_3: 15px;
 
 .ml-2 {
   margin-left: $indent_2;
+  font-size: 15px;
 }
 
 .ml-3 {
